@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:test_internship_enlab/modules/home/HomePage.dart';
+import 'package:test_internship_enlab/modules/home/home_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {

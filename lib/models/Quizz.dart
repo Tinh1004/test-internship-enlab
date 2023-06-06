@@ -66,6 +66,6 @@ class Quizz {
 
 int randomIndex(int length){
   Random random = Random();
-  int randomIndex = random.nextInt(length);
+  int randomIndex = random.nextInt(length + 1);
   return randomIndex;
 }

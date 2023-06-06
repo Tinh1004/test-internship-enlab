@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:test_internship_enlab/common/widgets/button/main_button.dart';
-import 'package:test_internship_enlab/modules/questions/QuizzPage.dart';
+import 'package:test_internship_enlab/modules/history/history_page.dart';
+import 'package:test_internship_enlab/modules/home/bloc/home_cubit.dart';
+import 'package:test_internship_enlab/modules/quizz/quizz_page.dart';
 import 'package:test_internship_enlab/themes/app_colors.dart';
 import 'package:test_internship_enlab/themes/app_dimension.dart';
+import 'package:test_internship_enlab/utils/app_images.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  var bloc = HomeCubit();
 
   @override
   Widget build(BuildContext context) {
@@ -24,29 +27,33 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            height: 100.r,
-            width: 100.r,
-            decoration: const BoxDecoration(color: Colors.orange),
+          SizedBox(
+            width: 200.r,
+            height: 200.r,
+            child: Image(
+              image: AssetImage(AssetPNG.block),
+              width: 200.r,
+              height: 200.r,
+            ),
           ),
           SizedBox(
-            height: 10.h,
+            height: 60.h,
           ),
           MainButton(
-            onPressed: onPresedNavigate,
+            onPressed: (){onPresedNavigate(QuizzPage(homeBloc: bloc,));},
             title: "Start Quiz!",
             minWidth: 0.3.sw,
             backgroundColor: AppColors.accent1,
             radius: 55.r,
           ),
           SizedBox(
-            height: 10.h,
+            height: 15.h,
           ),
           MainButton(
-            onPressed: (){},
+            onPressed: (){onPresedNavigate(HistoryPage(homeBloc: bloc,));},
             title: "History",
             minWidth: 0.3.sw,
-            backgroundColor: AppColors.accent1,
+            backgroundColor: AppColors.primary2,
             radius: 55.r,
           ),
         ],
@@ -54,7 +61,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void onPresedNavigate(){
-    Navigator.push(context, MaterialPageRoute(builder: (_)=>QuizzPage()));
+  void onPresedNavigate(Widget widget){
+    Navigator.push(context, MaterialPageRoute(builder: (_)=>widget));
   }
+
 }

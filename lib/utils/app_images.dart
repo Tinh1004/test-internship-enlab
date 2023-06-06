@@ -3,6 +3,9 @@ class AssetPNG {
   static const logo = baseAssets + 'logo.png';
   static const logoLogin = baseAssets + 'logo_login.png';
   static const image1 = baseAssets + 'image1.jpg';
+  static const image2 = baseAssets + 'image2.jpg';
+
+  static const block = baseAssets + 'block.png';
 
 }
 
