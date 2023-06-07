@@ -21,67 +21,69 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder(
-        bloc: widget.homeBloc,
-        builder: (context, state) {
-          return Container(
-            width: 1.sw,
-            height: 1.sh,
-            padding: EdgeInsets.all(20.r),
-            decoration: BoxDecoration(color: AppColors.primary1),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "History Page",
-                        style: StylesText.header1.copyWith(color: AppColors.accent1),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          onPressedNavigatePop();
-                        },
-                        child: Text(
-                          "x",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 28.sp,
-                            fontWeight: FontWeight.w500,
+      body: SafeArea(
+        child: BlocBuilder(
+          bloc: widget.homeBloc,
+          builder: (context, state) {
+            return Container(
+              width: 1.sw,
+              height: 1.sh,
+              padding: EdgeInsets.all(20.r),
+              decoration: BoxDecoration(color: AppColors.primary1),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "History Page",
+                          style: StylesText.header1.copyWith(color: AppColors.accent1),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            onPressedNavigatePop();
+                          },
+                          child: Text(
+                            "x",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 28.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 40.h,
-                  ),
-                  Text(
-                    "List Your Quizz submited!",
-                    style: StylesText.header2.copyWith(color: AppColors.white),
-                  ),
-                  SizedBox(
-                    height: 25.h,
-                  ),
-                  state is HomeInitial || state is HomeLoading
-                      ? Text(
-                    "List Empty...",
-                    style: TextStyle(
-                      color: AppColors.white,
+                      ],
                     ),
-                  )
-                      : SizedBox.shrink(),
-                  state is HomeSaveSuccess ? _widgetListYourQuizz(state.listData) : SizedBox.shrink(),
-                ],
+                    SizedBox(
+                      height: 40.h,
+                    ),
+                    Text(
+                      "List Your Quizz submited!",
+                      style: StylesText.header2.copyWith(color: AppColors.white),
+                    ),
+                    SizedBox(
+                      height: 25.h,
+                    ),
+                    state is HomeInitial || state is HomeLoading
+                        ? Text(
+                      "List Empty...",
+                      style: TextStyle(
+                        color: AppColors.white,
+                      ),
+                    )
+                        : SizedBox.shrink(),
+                    state is HomeSaveSuccess ? _widgetListYourQuizz(state.listData) : SizedBox.shrink(),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -140,8 +142,8 @@ class _HistoryPageState extends State<HistoryPage> {
             },
             title: "Detail",
             minWidth: 0.2.sw,
-            height: 40.r,
-            radius: 40.r,
+            height: 20.r,
+            radius: 20.r,
               backgroundColor: AppColors.accent1,
           )
         ],

@@ -21,17 +21,12 @@ class QuizzDetailPage extends StatelessWidget {
           children: [
             Text(
             "Detail ${data.time}",
-            style: StylesText.header2.copyWith(color: AppColors.white),
+            style: StylesText.body1.copyWith(color: AppColors.white),
           ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Correct: ",
-                  style: StylesText.body2.copyWith(
-                    color: AppColors.white,
-                  ),
-                ),
+
                 Text(
                   "${data.resultYourQuizz.countCorrect}/${data.resultYourQuizz.listYourQuizz.length}",
                   style: StylesText.body2.copyWith(

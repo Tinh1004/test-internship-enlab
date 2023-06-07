@@ -28,11 +28,11 @@ class MainButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      borderRadius: BorderRadius.circular(radius ?? 12.r),
+      borderRadius: BorderRadius.circular(radius ?? 30.r),
       color: backgroundColor ?? AppColors.primary1,
       child: MaterialButton(
         minWidth: minWidth ?? 1.sw,
-        height: height ?? 48.h,
+        height: height ?? 30.h,
         onPressed: () => onPressed(),
         child: widgetInButton ??
             Text(
