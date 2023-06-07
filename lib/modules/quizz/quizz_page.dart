@@ -56,105 +56,11 @@ class _QuizzPageState extends State<QuizzPage> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            onPressedNavigatePop();
-                          },
-                          child: Text(
-                            "x",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 28.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    _widgetTop(),
                     SizedBox(
                       height: 10.h,
                     ),
-                    BlocConsumer(
-                      bloc: bloc,
-                      builder: (context, state) {
-                        if (state is QuizzLoading || state is QuizzInitial) {
-                          return _widgetTextMessage("Loading...");
-                        }
-                        if (state is QuizzGetDataSuccess) {
-                          var listQizz = state.listData;
-                          return Column(
-                            children: [
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Question ${index + 1}",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24.sp,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  Text(
-                                    "/${bloc.listQizz.length}",
-                                    style: TextStyle(
-                                      color: Colors.white.withOpacity(0.8),
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 40.h,
-                              ),
-                              _widgetTextQuestion(listQizz[index].question ?? ""),
-                              SizedBox(
-                                height: 40.h,
-                              ),
-                              _widgetListAnswer(listQizz[index].allAnswer ?? []),
-                              SizedBox(
-                                height: 10.h,
-                              ),
-                              ValueListenableBuilder(
-                                valueListenable: bloc.chooseAnswerValueNotifier,
-                                builder: (context, value, child) {
-                                  return MainButton(
-                                    onPressed: () {
-                                      value.isEmpty
-                                          ? null
-                                          : bloc.handleSaveAnswer();
-                                      value.isEmpty
-                                          ? null
-                                          : index == (bloc.listQizz.length - 1)
-                                              ? showSubmit()
-                                              : bloc.onPessedNext();
-                                    },
-                                    height: 60.h,
-                                    radius: 60.r,
-                                    minWidth: 0.7.sw,
-                                    title: index == (bloc.listQizz.length - 1)
-                                        ? "submit"
-                                        : "next",
-                                    backgroundColor:
-                                        value.isEmpty ? Colors.grey : Colors.red,
-                                  );
-                                },
-                              )
-                            ],
-                          );
-                        }
-                        if (state is QuizzGetDataFailed) {
-                          return _widgetTextMessage(state.errorMessage);
-                        }
-                        return _widgetTextMessage("....");
-                      },
-                      listener: (context, state) {},
-                    ),
+                    _wigetBody(index),
                   ],
                 ),
               ),
@@ -162,6 +68,115 @@ class _QuizzPageState extends State<QuizzPage> {
           },
         ),
       ),
+    );
+  }
+
+  Widget _widgetTop(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        InkWell(
+          onTap: () {
+            onPressedNavigatePop();
+          },
+          child: Text(
+            "x",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 28.sp,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _wigetBody(int index){
+    return BlocConsumer(
+      bloc: bloc,
+      builder: (context, state) {
+        if (state is QuizzLoading || state is QuizzInitial) {
+          return _widgetTextMessage("Loading...");
+        }
+        if (state is QuizzGetDataSuccess) {
+          var listQizz = state.listData;
+          return _widgetGetQuizzSuccess(listQizz, index);
+        }
+        if (state is QuizzGetDataFailed) {
+          return _widgetTextMessage(state.errorMessage);
+        }
+        if (state is QuizzSubmitSuccess) {
+          return _widgetTextMessage(state.message);
+        }
+        return _widgetTextMessage("....");
+      },
+      listener: (context, state) {},
+    );
+  }
+
+  Widget _widgetGetQuizzSuccess(List<Quizz> listQizz, index){
+    return Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Question ${index + 1}",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24.sp,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              "/${bloc.listQizz.length}",
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.8),
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 40.h,
+        ),
+        _widgetTextQuestion(listQizz[index].question ?? ""),
+        SizedBox(
+          height: 40.h,
+        ),
+        _widgetListAnswer(listQizz[index].allAnswer ?? []),
+        SizedBox(
+          height: 10.h,
+        ),
+        ValueListenableBuilder(
+          valueListenable: bloc.chooseAnswerValueNotifier,
+          builder: (context, value, child) {
+            return MainButton(
+              onPressed: () {
+                value.isEmpty
+                    ? null
+                    : bloc.handleSaveAnswer();
+                value.isEmpty
+                    ? null
+                    : index == (bloc.listQizz.length - 1)
+                    ? showSubmit()
+                    : bloc.onPessedNext();
+              },
+              height: 60.h,
+              radius: 60.r,
+              minWidth: 0.7.sw,
+              title: index == (bloc.listQizz.length - 1)
+                  ? "submit"
+                  : "next",
+              backgroundColor:
+              value.isEmpty ? Colors.grey : Colors.red,
+            );
+          },
+        )
+      ],
     );
   }
 
@@ -186,6 +201,7 @@ class _QuizzPageState extends State<QuizzPage> {
       maxLines: 40,
     );
   }
+
 
   Widget _widgetListAnswer(List<String> allQuestion) {
     return ValueListenableBuilder(
@@ -279,15 +295,31 @@ class _QuizzPageState extends State<QuizzPage> {
                               width: 0.5.sw,
                             ),
                             _widgetContent(),
-                            MainButton(
-                              onPressed: () {
-                                bloc.onPessedPlayAgain();
-                                onPressedNavigatePop();
-                              },
-                              title: "Play again",
-                              height: 50.h,
-                              minWidth: 0.3.sw,
-                              radius: 50.r,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                MainButton(
+                                  onPressed: () {
+                                    bloc.onPessedPlayAgain();
+                                    onPressedNavigatePop();
+                                  },
+                                  title: "Play again",
+                                  height: 50.h,
+                                  minWidth: 0.3.sw,
+                                  radius: 50.r,
+                                ),
+                                MainButton(
+                                  onPressed: () {
+                                    onPressedNavigatePop();
+                                    onPressedNavigatePop();
+                                  },
+                                  title: "Cancel",
+                                  height: 50.h,
+                                  minWidth: 0.3.sw,
+                                  radius: 50.r,
+                                  backgroundColor: AppColors.red,
+                                ),
+                              ],
                             ),
                           ],
                         ),

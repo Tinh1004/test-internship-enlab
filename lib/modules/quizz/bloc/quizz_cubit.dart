@@ -70,6 +70,7 @@ class QuizzCubit extends Cubit<QuizzState> {
     chooseAnswerValueNotifier.value = "";
     indexQuizValueNotifier.value = 0;
     cancelTime();
+    emit(QuizzSubmitSuccess("Submit Success!!"));
   }
 
   void onPessedPlayAgain() {

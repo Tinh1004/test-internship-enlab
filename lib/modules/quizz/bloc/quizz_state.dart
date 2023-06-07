@@ -17,3 +17,8 @@ class QuizzGetDataFailed extends QuizzState {
 
   QuizzGetDataFailed(this.errorMessage);
 }
+
+class QuizzSubmitSuccess extends QuizzState {
+  final String message;
+  QuizzSubmitSuccess(this.message);
+}
